@@ -22,10 +22,9 @@ const departmentSchema = new Schema({
         type: String,
         require: true
     },
-    employees: {
-        type: Array,
-        require: true
-    }
+    employees: [{
+        type: Schema.Types.ObjectId,
+    }]
 })
 
 module.exports = mongoose.model('departments', departmentSchema)

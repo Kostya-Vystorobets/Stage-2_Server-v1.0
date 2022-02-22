@@ -1,12 +1,19 @@
-module.exports.getById = function (request, response) {
+const getById = (request, response) => {
 
 }
-module.exports.deleteById = function (request, response) {
+const deleteById = (request, response) => {
 
 }
-module.exports.create = function (request, response) {
+const create = (request, response) => {
 
 }
-module.exports.updeteById = function (request, response) {
+const updeteById = (request, response) => {
 
+}
+
+module.exports = {
+    getById,
+    deleteById,
+    create,
+    updeteById
 }

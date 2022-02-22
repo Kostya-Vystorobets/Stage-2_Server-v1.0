@@ -1,18 +1,16 @@
 const Department = require("../models/Department")
+const errorHandler = require("../utils/errorHandler")
 
-module.exports.getAll = function (request, response) {
-
-}
-module.exports.getById = function (request, response) {
+const getAll = (request, response) => {
 
 }
-module.exports.deleteById = function (request, response) {
+const getById = (request, response) => {
 
 }
-module.exports.getAll = function (request, response) {
+const deleteById = (request, response) => {
 
 }
-module.exports.create = async function (request, response) {
+const create = async (request, response) => {
     const department = new Department({
         name: request.body.name,
         description: request.body.description,
@@ -22,9 +20,17 @@ module.exports.create = async function (request, response) {
         await department.save()
         response.status(201).json(department)
     } catch (error) {
-        response.status(500).json({ message: error })
+        errorHandler(response, error)
     }
 }
-module.exports.updeteById = function (request, response) {
+const updeteById = (request, response) => {
 
+}
+
+module.exports = {
+    getAll,
+    getById,
+    deleteById,
+    create,
+    updeteById
 }

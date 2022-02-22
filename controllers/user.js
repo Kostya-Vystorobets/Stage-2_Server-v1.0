@@ -2,8 +2,9 @@ const User = require("../models/User");
 const jwt = require('jsonwebtoken');
 
 
-module.exports.login = async function (request, response) {
+const login = async (request, response) => {
     const user = await User.findOne({email: request.body.email})
+    console.log(request.body.password);
     if (user) {
         if (request.body.password === user.password) {
             const token = jwt.sign({
@@ -21,6 +22,11 @@ module.exports.login = async function (request, response) {
     }
 };
 
-module.exports.logout = function (request, response) {
+const logout = (request, response) => {
     
 };
+
+module.exports = {
+    login,
+    logout
+}
