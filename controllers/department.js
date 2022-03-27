@@ -1,30 +1,44 @@
-const Department = require("../models/Department")
-const errorHandler = require("../utils/errorHandler")
+const service = require('../services/departmen')
 
-const getAll = (request, response) => {
-
-}
-const getById = (request, response) => {
-
-}
-const deleteById = (request, response) => {
-
-}
-const create = async (request, response) => {
-    const department = new Department({
-        name: request.body.name,
-        description: request.body.description,
-        employee: []
-    })
+const getAll = async (request, response, next) => {
     try {
-        await department.save()
-        response.status(201).json(department)
+        const departments = await service.getAll(request.body)
+        return response.send(departments);
     } catch (error) {
-        errorHandler(response, error)
+        next(error)
     }
 }
-const updeteById = (request, response) => {
-
+const getById = async (request, response, next) => {
+    try {
+        const department = await service.getById(request.params.id)
+        return response.send(department);
+    } catch (error) {
+        next(error)
+    }
+}
+const deleteById = async (request, response, next) => {
+    try {
+        const department = service.deleteById({_id: request.params.id})
+        return response.send(department);
+    } catch (error) {
+        next(error)
+    }
+}
+const create = async (request, response, next) => {
+    try {
+        const department = await service.create(request.body)
+        return response.send(department);
+    } catch (error) {
+        next(error)
+    }
+}
+const updeteById = async (request, response, next) => {
+    try {
+        const department = await service.updeteById(request.params.id, request.body, { new: true })
+        return response.send(department);
+    } catch (error) {
+        next(error)
+    }
 }
 
 module.exports = {
