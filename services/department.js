@@ -1,19 +1,15 @@
 const Department = require('../models/Department');
 
-
 const getAll = async () => {
-    const departments = await Department.find()
-    return departments;
+    return Department.find()
 }
 
 const getById = async (id) => {
-        const department = await Department.findById(id)
-        return department;
+    return Department.findById(id)
 }
 const deleteById = async (id) => {
-    const department = await Department.remove(id)
-    return department;
-        
+    return Department.remove(id)
+
 }
 const create = async (body) => {
     const department = new Department({
@@ -24,8 +20,7 @@ const create = async (body) => {
     await department.save()
 }
 const updeteById = async (id, body) => {
-        const updateDepartment = await Department.findByIdAndUpdate(id, body)
-        return updateDepartment;
+    return Department.findByIdAndUpdate(id, body)
 }
 
 module.exports = {

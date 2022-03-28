@@ -1,4 +1,4 @@
-const service = require('../services/departmen')
+const service = require('../services/department')
 
 const getAll = async (request, response, next) => {
     try {
@@ -18,7 +18,7 @@ const getById = async (request, response, next) => {
 }
 const deleteById = async (request, response, next) => {
     try {
-        const department = service.deleteById({_id: request.params.id})
+        const department = service.deleteById({ _id: request.params.id })
         return response.send(department);
     } catch (error) {
         next(error)

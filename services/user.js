@@ -1,5 +1,5 @@
-const User = require("../models/User");
-const jwt = require('jsonwebtoken');
+// const User = require("../models/User");
+// const jwt = require('jsonwebtoken');
 
 
 const login = async (request, response) => {
@@ -22,7 +22,7 @@ const login = async (request, response) => {
 };
 
 const logout = (request, response) => {
-    
+
 };
 
 module.exports = {

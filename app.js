@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(`/api/${version}/user`, userRoutes);
 app.use(`/api/${version}/department`, departmentRoutes);
 app.use(`/api/${version}/employee`, employeeRoutes);
-app.use ((request, response, error, next) => {
+app.use((request, response, error, next) => {
     errorHandler(response, error);
 });
 
