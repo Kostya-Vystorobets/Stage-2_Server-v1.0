@@ -5,6 +5,7 @@ const getAll = async () => {
 }
 
 const getById = async (id) => {
+    console.log(Department)
     return Department.findById(id)
 }
 const deleteById = async (id) => {

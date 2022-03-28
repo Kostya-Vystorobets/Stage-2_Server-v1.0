@@ -23,7 +23,7 @@ const departmentSchema = new Schema({
         require: true
     },
     employees: [{
-        type: Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId
     }]
 })
 
