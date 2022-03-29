@@ -1,7 +1,7 @@
 /node_modules
 /.eslintrc.js
 /.env
-
+/.prettierrc
 /REST API.txt
 /REST API.txt
 /_Git repository
