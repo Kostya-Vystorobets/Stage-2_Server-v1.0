@@ -11,16 +11,16 @@ const deleteById = async (id) => {
     return Department.remove(id)
 
 }
-const create = async (body) => {
-    const department = new Department({
-        name: body.name,
-        description: body.description,
-        employee: []
+const create = async (department) => {
+    const newDepartment = new Department({
+        name: department.name,
+        description: department.description,
+        // employee: []
     })
-    await department.save()
+    return newDepartment.save()
 }
-const updeteById = async (id, body) => {
-    return Department.findByIdAndUpdate(id, body)
+const updeteById = async (id, department) => {
+    return Department.findByIdAndUpdate(id, department)
 }
 
 module.exports = {

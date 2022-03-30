@@ -1,29 +1,31 @@
 const Employee = require('../models/Employee')
-// const service = require('./department')
+const Department = require('../models/Department')
 
-const getById = async (request, response) => {
-        const employee = await Employee.find({ _id: request.params.id })
-        return employee
+
+const getById = async (id) => {
+        return Employee.findById(id)
 }
-const deleteById = async (request, response) => {
-        const employee = await Employee.remove({ _id: request.params.id })
-        return employee
+const deleteById = async (id) => {
+        return Employee.remove(id)
+
 }
-const create = async (request, response) => {
-        const employee = new Employee({
-                name: request.name,
-                description: request.description,
+const create = async (departmentId, employee) => {
+        console.log(departmentId)
+        const newEmployee = new Employee({
+                userName: employee.userName,
+                description: employee.description
         })
-        // const departmen = service.updeteById(request.params.id, request)
-        // return departmen
+        return newEmployee.save()
+                .then(employee => {
+                        return Department.findOneAndUpdate(
+                                departmentId,
+                                { $push: { employees: employee._id } },
+                                { new: true, useFindAndModify: false }
+                        );
+                })
 }
-const updeteById = async (request, response) => {
-        const employee = await Employee.findOneAndUpdate(
-                { _id: request.params.id },
-                { $set: request.body },
-                { new: true }
-        )
-        return employee
+const updeteById = async (id, employee) => {
+        return Employee.findOneAndUpdate(id, employee)
 }
 
 module.exports = {

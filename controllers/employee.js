@@ -2,6 +2,7 @@ const service = require('../services/employee')
 
 const getById = async (request, response, next) => {
     try {
+        console.log(request)
         const employee = await service.getById({ _id: request.params.id })
         return response.send(employee)
     } catch (error) {
@@ -18,7 +19,8 @@ const deleteById = async (request, response, next) => {
 }
 const create = async (request, response, next) => {
     try {
-        const employee = await service.create(request.body)
+
+        const employee = await service.create(request.params.id, request.body)
         return response.send(employee)
     } catch (error) {
         next(error)
