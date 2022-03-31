@@ -5,7 +5,9 @@ const getAll = async () => {
 }
 
 const getById = async (id) => {
-    return Department.findById(id)
+    const departmentById = Department.findById(id)
+    return departmentById.populate("employees")
+
 }
 const deleteById = async (id) => {
     return Department.remove(id)
@@ -15,7 +17,6 @@ const create = async (department) => {
     const newDepartment = new Department({
         name: department.name,
         description: department.description,
-        // employee: []
     })
     return newDepartment.save()
 }

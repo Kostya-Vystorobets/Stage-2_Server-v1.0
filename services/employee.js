@@ -2,29 +2,30 @@ const Employee = require('../models/Employee')
 const Department = require('../models/Department')
 
 
-const getById = async (id) => {
+const getById = (id) => {
         return Employee.findById(id)
 }
-const deleteById = async (id) => {
-        return Employee.remove(id)
+const deleteById = async (employeeId) => {
+        return Employee.deleteOne({ employeeId })
 
 }
 const create = async (departmentId, employee) => {
-        console.log(departmentId)
         const newEmployee = new Employee({
                 userName: employee.userName,
-                description: employee.description
+                description: employee.description,
+                userName: employee.userName,
+                email: employee.email,
+                firstName: employee.firstName,
+                lastName: employee.lastName
         })
-        return newEmployee.save()
-                .then(employee => {
-                        return Department.findOneAndUpdate(
-                                departmentId,
-                                { $push: { employees: employee._id } },
-                                { new: true, useFindAndModify: false }
-                        );
-                })
+        const savedEmployee = await newEmployee.save()
+        return Department.findOneAndUpdate(
+                { _id: departmentId },
+                { $push: { employees: savedEmployee._id } },
+                { new: true, useFindAndModify: false }
+        )
 }
-const updeteById = async (id, employee) => {
+const updeteById = (id, employee) => {
         return Employee.findOneAndUpdate(id, employee)
 }
 

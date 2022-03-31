@@ -11,7 +11,7 @@ const getById = async (request, response, next) => {
 }
 const deleteById = async (request, response, next) => {
     try {
-        const employee = await service.deleteById({ _id: request.params.id })
+        const employee = await service.deleteById(request.params.departmentId, request.params.id)
         return response.send(employee)
     } catch (error) {
         next(error)
@@ -19,8 +19,7 @@ const deleteById = async (request, response, next) => {
 }
 const create = async (request, response, next) => {
     try {
-
-        const employee = await service.create(request.params.id, request.body)
+        const employee = await service.create(request.params.departmentId, request.body)
         return response.send(employee)
     } catch (error) {
         next(error)
