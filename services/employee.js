@@ -1,12 +1,13 @@
 const Employee = require('../models/Employee')
 const Department = require('../models/Department')
+const logger = require("../logger/dev-logger")
 
 
-const getById = (id) => {
-        return Employee.findById(id)
+const getById = (employeeId) => {
+        return Employee.findById(employeeId)
 }
 const deleteById = async (employeeId) => {
-        return Employee.deleteOne({ employeeId })
+        return Employee.remove({ employeeId })
 
 }
 const create = async (departmentId, employee) => {
@@ -25,8 +26,19 @@ const create = async (departmentId, employee) => {
                 { new: true, useFindAndModify: false }
         )
 }
-const updeteById = (id, employee) => {
-        return Employee.findOneAndUpdate(id, employee)
+const updeteById = (employeeId, employee) => {
+        return Employee.findOneAndUpdate(
+                employeeId,
+                {
+                        userName: employee.userName,
+                        email: employee.email,
+                        firstName: employee.firstName,
+                        lastName: employee.lastName,
+                        updated_at: Date.now()
+                },
+                {
+                        new: true
+                })
 }
 
 module.exports = {

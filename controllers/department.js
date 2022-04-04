@@ -34,7 +34,7 @@ const create = async (request, response, next) => {
 }
 const updeteById = async (request, response, next) => {
     try {
-        const department = await service.updeteById(request.params.id, request.body, { new: true })
+        const department = await service.updeteById(request.params.id, request.body)
         return response.send(department);
     } catch (error) {
         next(error)

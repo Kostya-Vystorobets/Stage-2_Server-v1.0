@@ -2,7 +2,6 @@ const service = require('../services/employee')
 
 const getById = async (request, response, next) => {
     try {
-        console.log(request)
         const employee = await service.getById({ _id: request.params.id })
         return response.send(employee)
     } catch (error) {
@@ -11,8 +10,8 @@ const getById = async (request, response, next) => {
 }
 const deleteById = async (request, response, next) => {
     try {
-        const employee = await service.deleteById(request.params.departmentId, request.params.id)
-        return response.send(employee)
+        const data = await service.deleteById(request.params.departmentId, request.params.id)
+        return response.send(data)
     } catch (error) {
         next(error)
     }
@@ -27,11 +26,7 @@ const create = async (request, response, next) => {
 }
 const updeteById = async (request, response, next) => {
     try {
-        const employee = await service.updeteById(
-            { _id: request.params.id },
-            { $set: request.body },
-            { new: true }
-        )
+        const employee = await service.updeteById(request.params.id, request.body)
         return response.send(employee)
     } catch (error) {
         next(error)
