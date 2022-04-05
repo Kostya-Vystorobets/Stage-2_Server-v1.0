@@ -14,21 +14,23 @@ const { checkAnyUserExist } = require('./middleware/checkAnyUserExist');
 const version = 'v1';
 require('dotenv').config();
 
-mongoose.connect(process.env.mongoURI)
-    .then(() => console.log('MongoDB connected'))
-    .catch((error) => console.log(error));
+// mongoose.connect(process.env.mongoURI)
+//     .then(() => console.log('MongoDB connected'))
+//     .catch((error) => console.log(error));
 
-// const initDatabase = async () => {
-//     try {
-//         await mongoose.connect(process.env.mongoURI);
-//         console.log("Connected to MongoDB.");
-//         await checkAnyUserExist();
-//     } catch (error) {
-//         console.error(error);
-//     }
-// };
+// heckAnyUserExist()
 
-// initDatabase();
+const initDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.mongoURI);
+        console.log("Connected to MongoDB.");
+        await checkAnyUserExist();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+initDatabase();
 
 const app = express();
 
@@ -39,8 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-
-app.use(verifyAuth);
+// app.use(verifyAuth);
 app.use(`/api/${version}/user`, userRoutes);
 app.use(`/api/${version}/department`, departmentRoutes);
 app.use(`/api/${version}/employee`, employeeRoutes);

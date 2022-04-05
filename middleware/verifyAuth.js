@@ -7,7 +7,7 @@ const verifyAuth = (request, response, next) => {
         if (request.path === "/api/v1/user/login") {
             next();
         } else {
-            const token = require.header("x-auth-token")
+            const token = request.header("x-auth-token")
             if (!token) {
                 const decoded = jwt.verify(token, 'dev-jwt')
                 request = decoded
