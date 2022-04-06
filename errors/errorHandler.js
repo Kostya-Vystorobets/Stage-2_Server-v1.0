@@ -1,4 +1,4 @@
-const ApplicationError = require("./aplicationError");
+const ApplicationError = require("./applicationError");
 const NotFoundError = require("./notFoundError");
 
 const errorHandler = (response, error) => {

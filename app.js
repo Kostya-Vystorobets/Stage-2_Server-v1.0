@@ -14,21 +14,17 @@ const { checkAnyUserExist } = require('./middleware/checkAnyUserExist');
 const version = 'v1';
 require('dotenv').config();
 
-mongoose.connect(process.env.mongoURI)
-    .then(() => console.log('MongoDB connected'))
-    .catch((error) => console.log(error));
+const initDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.mongoURI);
+        console.log("Connected to MongoDB.");
+        await checkAnyUserExist();
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-// const initDatabase = async () => {
-//     try {
-//         await mongoose.connect(process.env.mongoURI);
-//         console.log("Connected to MongoDB.");
-//         await checkAnyUserExist();
-//     } catch (error) {
-//         console.error(error);
-//     }
-// };
-
-// initDatabase();
+initDatabase();
 
 const app = express();
 
@@ -37,7 +33,6 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 
 
 app.use(verifyAuth);

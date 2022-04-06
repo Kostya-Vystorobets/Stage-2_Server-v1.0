@@ -1,4 +1,4 @@
-const ApplicationError = require("./aplicationError");
+const ApplicationError = require("./applicationError");
 
 module.exports = class NotFoundError extends ApplicationError {
     constructor(msg) {
