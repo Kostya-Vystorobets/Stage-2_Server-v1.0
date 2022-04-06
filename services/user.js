@@ -5,18 +5,14 @@ const logger = require("../logger/dev-logger")
 
 const login = async (request) => {
     const user = await User.findOne({ username: request.body.username })
-    console.log(user)
     if (user) {
-        console.log(request.body.password)
-        console.log(user.password)
         const validPassword = await bcrypt.compare(request.body.password, user.password)
-        console.log(validPassword)
         if (validPassword) {
             const token = jwt.sign({
-                email: user.email,
+                username: user.usernameі,
                 userId: user._id
-            }, 'dev-jwt', { expiresIn: '24h' })
-            return token
+            }, process.env.jwt, { expiresIn: '24h' })
+            return { token: token }
         } else {
             throw new ApplicationError("Password is not correct", 401)
         }
@@ -26,11 +22,17 @@ const login = async (request) => {
 };
 
 const create = async (user) => {
-    const newUser = new User({
-        username: user.username,
-        password: user.password,
-    })
-    return newUser.save()
+    bcrypt.genSalt(10)
+        .then(salt => {
+            bcrypt.hash(user.password, salt)
+                .then(hashPassword => {
+                    const newUser = new User({
+                        username: user.username,
+                        password: hashPassword,
+                    })
+                    return newUser.save()
+                })
+        })
 }
 
 module.exports = {

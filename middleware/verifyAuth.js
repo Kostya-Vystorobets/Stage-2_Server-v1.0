@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const ApplicationError = require('../errors/aplicationError');
+const ApplicationError = require('../errors/applicationError');
 const logger = require("../logger/dev-logger");
 
 const verifyAuth = (request, response, next) => {
@@ -7,9 +7,10 @@ const verifyAuth = (request, response, next) => {
         if (request.path === "/api/v1/user/login") {
             next();
         } else {
-            const token = request.header("x-auth-token")
-            if (!token) {
-                const decoded = jwt.verify(token, 'dev-jwt')
+            const bearerToken = request.headers.authorization
+            const token = bearerToken.slice(7)
+            if (token) {
+                const decoded = jwt.verify(token, process.env.jwt)
                 request = decoded
                 next()
             } else {
