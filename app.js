@@ -11,20 +11,37 @@ const errorHandler = require('./errors/errorHandler');
 const { verifyAuth } = require('./middleware/verifyAuth');
 const { errorHandlerMiddleware } = require('./middleware/errorHandlerMiddleware');
 const { checkAnyUserExist } = require('./middleware/checkAnyUserExist');
+const { seedDatabase } = require("./sederDatabase")
+
 const version = 'v1';
 require('dotenv').config();
 
 const initDatabase = async () => {
     try {
-        await mongoose.connect(process.env.mongoURI);
+        await seedDatabase();
+        // await mongoose.connect(process.env.mongoURI);
         console.log("Connected to MongoDB.");
-        await checkAnyUserExist();
     } catch (error) {
         console.error(error);
     }
 };
 
 initDatabase();
+
+
+// const { Seeder } = require('mongo-seeding');
+// const path = require('path');
+
+// const config = {
+//     database: process.env.mongoURI,
+//     dropDatabase: false,
+//     dropCollections: true
+// };
+
+// const seeder = new Seeder(config);
+// const newUser = seeder.readCollectionsFromPath(path.resolve("./data"));
+// seeder.import(newUser);
+
 
 const app = express();
 
