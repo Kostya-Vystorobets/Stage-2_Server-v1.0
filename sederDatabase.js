@@ -9,6 +9,7 @@ const config = {
     dropCollections: true
 };
 
+
 const seedDatabase = async () => {
     const seeder = new Seeder(config);
     const newUser = seeder.readCollectionsFromPath(path.resolve("./data"), {
