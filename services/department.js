@@ -12,7 +12,6 @@ const getById = async (departmentId) => {
 }
 const deleteById = async (departmentId) => {
     return Department.remove(departmentId)
-
 }
 const create = async (department) => {
     const newDepartment = new Department({
@@ -25,7 +24,6 @@ const updeteById = async (departmentId, department) => {
     return Department.findByIdAndUpdate(
         departmentId,
         {
-            name: department.name,
             description: department.description,
             updated_at: Date.now()
         },
