@@ -1,13 +1,18 @@
 const Employee = require('../models/Employee')
 const Department = require('../models/Department')
-const logger = require("../logger/dev-logger")
+const logger = require("../logger/logger")
 
 const getById = (employeeId) => {
     return Employee.findById(employeeId)
 }
-const deleteById = async (employeeId) => {
-    return Employee.remove({ employeeId })
-
+const deleteById = async (departmentId, employeeId) => {
+    const deleteEmployee = await Employee.deleteOne({ employeeId })
+    const deletIdInDepertment = await Department.findOneAndUpdate(
+        { _id: departmentId },
+        { $pull: { employees: employeeId } },
+        { new: true, useFindAndModify: false }
+    )
+    return deleteEmployee
 }
 
 const create = async (departmentId, employee) => {
@@ -30,7 +35,6 @@ const updeteById = (employeeId, employee) => {
     return Employee.findOneAndUpdate(
         employeeId,
         {
-            userName: employee.userName,
             email: employee.email,
             firstName: employee.firstName,
             lastName: employee.lastName,

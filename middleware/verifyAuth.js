@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const ApplicationError = require('../errors/applicationError');
-const logger = require("../logger/dev-logger");
+const logger = require('../logger/logger')
 
 const verifyAuth = (request, response, next) => {
     try {
-        if (request.path === "/api/v1/user/login") {
+        if (request.path === '/api/v1/user/login') {
             next();
         } else {
             const bearerToken = request.headers.authorization
@@ -14,11 +14,13 @@ const verifyAuth = (request, response, next) => {
                 request = decoded
                 next()
             } else {
-                throw new ApplicationError("Access denied. Token not provided", 401)
+                logger.warn('Access denied. Token not provided')
+                throw new ApplicationError('Access denied. Token not provided', 401)
             }
         }
     } catch (error) {
-        throw new ApplicationError("Invalid token", 401)
+        logger.warn('Invalid token')
+        throw new ApplicationError('Invalid token', 401)
     }
 }
 

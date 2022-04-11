@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
 const departmentRoutes = require('./routes/department');
 const employeeRoutes = require('./routes/employee');
@@ -10,19 +9,9 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./errors/errorHandler');
 const { verifyAuth } = require('./middleware/verifyAuth');
 const { errorHandlerMiddleware } = require('./middleware/errorHandlerMiddleware');
-const { checkAnyUserExist } = require('./middleware/checkAnyUserExist');
+const { initDatabase } = require("./initDatabase")
 const version = 'v1';
-require('dotenv').config();
 
-const initDatabase = async () => {
-    try {
-        await mongoose.connect(process.env.mongoURI);
-        console.log("Connected to MongoDB.");
-        await checkAnyUserExist();
-    } catch (error) {
-        console.error(error);
-    }
-};
 
 initDatabase();
 
@@ -33,7 +22,6 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 
 app.use(verifyAuth);
 app.use(`/api/${version}/user`, userRoutes);

@@ -8,8 +8,7 @@ const userSchema = new Schema({
     },
     username: {
         type: String,
-        require: true,
-        unique: true
+        require: true
     },
     password: {
         type: String,
@@ -25,8 +24,6 @@ const userSchema = new Schema({
         require: true,
         default: () => Date.now()
     }
-
-
 })
 
 module.exports = mongoose.model('users', userSchema)

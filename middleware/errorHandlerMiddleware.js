@@ -1,7 +1,6 @@
-const { errorHandler } = require("../errors/errorHandler");
-const logger = require("../logger/dev-logger")
+const { errorHandler } = require('../errors/errorHandler');
 
-const errorHandlerMiddleware = (error, request, response, next) => {
+const errorHandlerMiddleware = (error, request, response) => {
     errorHandler(response, error)
 };
 
