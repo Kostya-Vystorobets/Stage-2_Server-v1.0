@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "server": "nodemon index.js",
+    "server": "nodemon index.js", 
     "lint": "eslint . --fix"
   },
   "keywords": [

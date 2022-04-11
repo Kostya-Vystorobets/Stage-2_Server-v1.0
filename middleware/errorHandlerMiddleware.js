@@ -1,6 +1,6 @@
-const { errorHandler } = require("../errors/errorHandler");
+const { errorHandler } = require('../errors/errorHandler');
 
-const errorHandlerMiddleware = (error, request, response, next) => {
+const errorHandlerMiddleware = (error, request, response) => {
     errorHandler(response, error)
 };
 

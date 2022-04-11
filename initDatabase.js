@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs/dist/bcrypt')
+const logger = require("./logger/logger")
 const { Seeder } = require('mongo-seeding');
 const path = require('path');
 require('dotenv').config();
@@ -28,7 +29,7 @@ const seedUser = () => {
         const newUser = seeder.readCollectionsFromPath(path.resolve('./data'), { transformers: [transformUser] });
         return seeder.import(newUser);
     } catch (error) {
-        console.error(error)
+        logger.error(error)
     }
 }
 
@@ -36,12 +37,12 @@ const initDatabase = async () => {
     try {
         await seedUser();
         await mongoose.connect(process.env.mongoURI);
-        console.log("Connected to MongoDB.");
+        logger.info("Connected to MongoDB.");
     } catch (error) {
-        console.error(error);
+        logger.error(error)
     }
-};
+}
 
 module.exports = {
     initDatabase
-}; 
+}

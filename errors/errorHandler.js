@@ -1,5 +1,5 @@
-const ApplicationError = require("./applicationError");
-const NotFoundError = require("./notFoundError");
+const ApplicationError = require('./applicationError');
+const NotFoundError = require('./notFoundError');
 
 const errorHandler = (response, error) => {
     if (error instanceof ApplicationError) {
@@ -13,9 +13,9 @@ const errorHandler = (response, error) => {
     response.status(500).send({
         success: false,
         massage: error.message ? error.massage : error
-    })
-}
+    });
+};
 
 module.exports = {
     errorHandler
-}
+};

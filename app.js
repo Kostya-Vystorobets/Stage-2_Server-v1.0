@@ -12,6 +12,7 @@ const { errorHandlerMiddleware } = require('./middleware/errorHandlerMiddleware'
 const { initDatabase } = require("./initDatabase")
 const version = 'v1';
 
+
 initDatabase();
 
 const app = express();

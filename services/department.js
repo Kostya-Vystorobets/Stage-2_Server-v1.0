@@ -1,5 +1,5 @@
 const Department = require('../models/Department');
-const logger = require("../logger/dev-logger")
+const logger = require("../logger/logger")
 
 const getAll = async () => {
     return Department.find().sort("name");

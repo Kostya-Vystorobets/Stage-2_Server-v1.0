@@ -1,6 +1,6 @@
 const Employee = require('../models/Employee')
 const Department = require('../models/Department')
-const logger = require("../logger/dev-logger")
+const logger = require("../logger/logger")
 
 const getById = (employeeId) => {
     return Employee.findById(employeeId)
