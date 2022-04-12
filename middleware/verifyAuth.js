@@ -14,12 +14,12 @@ const verifyAuth = (request, response, next) => {
                 request = decoded
                 next()
             } else {
-                logger.warn('Access denied. Token not provided')
+                logger.error('Access denied. Token not provided')
                 throw new ApplicationError('Access denied. Token not provided', 401)
             }
         }
     } catch (error) {
-        logger.warn('Invalid token')
+        logger.error('Invalid token')
         throw new ApplicationError('Invalid token', 401)
     }
 }

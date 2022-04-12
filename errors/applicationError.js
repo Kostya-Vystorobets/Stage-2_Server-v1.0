@@ -1,6 +1,6 @@
 module.exports = class ApplicationError extends Error {
-    constructor(msg, status = 500) {
-        super(msg);
+    constructor(message, status = 500) {
+        super(message);
         this.status = status;
     }
 };

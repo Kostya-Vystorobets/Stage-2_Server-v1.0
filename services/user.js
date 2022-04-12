@@ -2,6 +2,7 @@ const User = require("../models/User");
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs/dist/bcrypt");
 const logger = require("../logger/logger");
+const ApplicationError = require('../errors/applicationError');
 
 const login = async (request) => {
     const user = await User.findOne({ username: request.body.username })

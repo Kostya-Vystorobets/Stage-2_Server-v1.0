@@ -1,9 +1,11 @@
 const { errorHandler } = require('../errors/errorHandler');
+const logger = require('../logger/logger');
 
 const errorHandlerMiddleware = (error, request, response) => {
-    errorHandler(response, error)
+    logger.error(error);
+    errorHandler(response, error);
 };
 
 module.exports = {
     errorHandlerMiddleware
-}
+};

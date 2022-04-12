@@ -1,13 +1,19 @@
 const Employee = require('../models/Employee')
 const Department = require('../models/Department')
 const logger = require("../logger/logger")
+const { Console } = require('winston/lib/winston/transports')
 
 const getById = (employeeId) => {
-    return Employee.findById(employeeId)
+    const employee = Employee.findById(employeeId)
+    if (!employee) {
+        throw new ApplicationError(`The employee with ID ${employeeId} was not found`, 400)
+    }
+    return employee
 }
 const deleteById = async (departmentId, employeeId) => {
     const deleteEmployee = await Employee.deleteOne({ employeeId })
-    const deletIdInDepertment = await Department.findOneAndUpdate(
+    console.log(deleteEmployee)
+    await Department.findOneAndUpdate(
         { _id: departmentId },
         { $pull: { employees: employeeId } },
         { new: true, useFindAndModify: false }
@@ -25,11 +31,12 @@ const create = async (departmentId, employee) => {
         lastName: employee.lastName
     })
     const savedEmployee = await newEmployee.save()
-    return Department.findOneAndUpdate(
+    await Department.findOneAndUpdate(
         { _id: departmentId },
         { $push: { employees: savedEmployee._id } },
         { new: true, useFindAndModify: false }
     )
+    return savedEmployee;
 }
 const updeteById = (employeeId, employee) => {
     return Employee.findOneAndUpdate(
