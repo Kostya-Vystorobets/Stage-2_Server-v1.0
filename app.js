@@ -9,11 +9,10 @@ const bodyParser = require('body-parser');
 const ApplicationError = require('./errors/applicationError');
 const { verifyAuth } = require('./middleware/verifyAuth');
 const { errorHandlerMiddleware } = require('./middleware/errorHandlerMiddleware');
-const { initDatabase } = require("./initDatabase")
+const { initDatabase } = require('./database/initDatabase')
 const version = 'v1';
 
 initDatabase();
-
 const app = express();
 
 app.use(morgan('dev'));
@@ -23,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(verifyAuth);
+
 app.use(`/api/${version}/user`, userRoutes);
 app.use(`/api/${version}/department`, departmentRoutes);
 app.use(`/api/${version}/employee`, employeeRoutes);

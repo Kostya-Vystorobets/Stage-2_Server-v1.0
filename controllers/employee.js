@@ -10,6 +10,7 @@ const getById = async (request, response, next) => {
         // next(error);
     }
 };
+
 const deleteById = async (request, response, next) => {
     try {
         const data = await service.deleteById(request.params.departmentId, request.params.id);

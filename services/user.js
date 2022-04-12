@@ -25,6 +25,21 @@ const login = async (request) => {
     }
 };
 
+const create = async (user) => {
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds)
+    const hashPassword = await bcrypt.hash(user.password, salt)
+    const newUser = new User({
+        username: user.username,
+        password: hashPassword,
+    })
+    return newUser.save()
+};
+
+
+
+
 module.exports = {
-    login
+    login,
+    create
 };

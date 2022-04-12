@@ -2,6 +2,7 @@ const Department = require('../models/Department');
 const logger = require("../logger/logger")
 
 const getAll = async () => {
+    console.log("test dep")
     return Department.find().sort("name");
 }
 

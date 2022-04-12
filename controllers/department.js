@@ -6,7 +6,6 @@ const getAll = async (request, response, next) => {
         const departments = await service.getAll(request.body)
         return response.send(departments);
     } catch (error) {
-        console.log(error)
         next(error)
     }
 }

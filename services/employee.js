@@ -1,7 +1,5 @@
 const Employee = require('../models/Employee')
 const Department = require('../models/Department')
-const logger = require("../logger/logger")
-const { Console } = require('winston/lib/winston/transports')
 
 const getById = (employeeId) => {
     const employee = Employee.findById(employeeId)
