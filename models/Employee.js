@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const employeeSchema = new Schema({
-    id: {
-        type: Schema.Types.ObjectId,
-        require: true
-    },
     userName: {
         type: String,
         require: true

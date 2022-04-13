@@ -1,4 +1,5 @@
 const service = require('../services/department')
+const validation = require('../validations/department')
 
 const getAll = async (request, response, next) => {
     try {
@@ -10,7 +11,7 @@ const getAll = async (request, response, next) => {
 }
 const getById = async (request, response, next) => {
     try {
-        const department = await service.getById({ _id: request.params.id })
+        const department = await service.getById(request.params.id)
         return response.send(department);
     } catch (error) {
         next(error)
@@ -26,6 +27,7 @@ const deleteById = async (request, response, next) => {
 }
 const create = async (request, response, next) => {
     try {
+        await validation.validDepartmentCreate(request.body);
         const department = await service.create(request.body)
         return response.send(department);
     } catch (error) {
@@ -34,6 +36,7 @@ const create = async (request, response, next) => {
 }
 const updeteById = async (request, response, next) => {
     try {
+        await validation.validDepartmentUpdete(request.body);
         const department = await service.updeteById(request.params.id, request.body)
         return response.send(department);
     } catch (error) {

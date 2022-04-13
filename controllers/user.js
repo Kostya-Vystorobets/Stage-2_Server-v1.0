@@ -1,5 +1,5 @@
 const service = require('../services/user');
-
+const validation = require('../validations/user')
 
 const login = async (request, response, next) => {
     try {
@@ -10,6 +10,18 @@ const login = async (request, response, next) => {
     }
 };
 
+const create = async (request, response, next) => {
+    try {
+        await validation.validUserCreate(request.body);
+        const employee = await service.create(request.params.departmentId, request.body);
+        return response.send(employee);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 module.exports = {
-    login
+    login,
+    create
 };
