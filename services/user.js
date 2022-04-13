@@ -16,12 +16,12 @@ const login = async (request) => {
             }, process.env.jwt, { expiresIn: '24h' })
             return { token: token }
         } else {
-            logger.warn("Password is not correct")
-            throw new ApplicationError("Password is not correct", 401)
+            logger.warn('Password is not correct')
+            throw new ApplicationError('Password is not correct', 401)
         }
     } else {
-        logger.warn("User not found")
-        throw new ApplicationError("User not found", 404)
+        logger.warn('User not found')
+        throw new ApplicationError('User not found', 404)
     }
 };
 
@@ -35,9 +35,6 @@ const create = async (user) => {
     })
     return newUser.save()
 };
-
-
-
 
 module.exports = {
     login,

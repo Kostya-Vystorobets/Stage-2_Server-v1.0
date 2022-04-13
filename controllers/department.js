@@ -11,7 +11,7 @@ const getAll = async (request, response, next) => {
 }
 const getById = async (request, response, next) => {
     try {
-        const department = await service.getById({ _id: request.params.id })
+        const department = await service.getById(request.params.id)
         return response.send(department);
     } catch (error) {
         next(error)

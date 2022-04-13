@@ -13,6 +13,7 @@ const { initDatabase } = require('./database/initDatabase')
 const version = 'v1';
 
 initDatabase();
+
 const app = express();
 
 app.use(morgan('dev'));

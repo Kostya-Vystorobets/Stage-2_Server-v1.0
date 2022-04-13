@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs/dist/bcrypt')
 const logger = require('../logger/logger')
-const path = require('path');
 const { checkAnyUserExist } = require('./checkAnyUserExist')
 require('dotenv').config();
 

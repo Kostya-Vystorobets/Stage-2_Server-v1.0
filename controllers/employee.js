@@ -3,11 +3,10 @@ const validation = require('../validations/employee')
 
 const getById = async (request, response, next) => {
     try {
-        const employee = await service.getById({ _id: request.params.id });
+        const employee = await service.getById(request.params.id);
         return response.send(employee);
     } catch (error) {
-        console.log(error)
-        // next(error);
+        next(error);
     }
 };
 

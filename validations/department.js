@@ -10,9 +10,8 @@ const validDepartmentCreate = async (data) => {
         await schema.validateAsync(data);
     } catch (error) {
         logger.error(error);
-        throw new ApplicationError(error);
+        throw new ApplicationError("validDepartmentCreate");
     };
-
 };
 
 const validDepartmentUpdete = async (data) => {
@@ -23,9 +22,8 @@ const validDepartmentUpdete = async (data) => {
         await schema.validateAsync(data);
     } catch (error) {
         logger.error(error);
-        throw new ApplicationError(error);
+        throw new ApplicationError("validDepartmentUpdete");
     };
-
 };
 
 module.exports = { validDepartmentCreate, validDepartmentUpdete };
