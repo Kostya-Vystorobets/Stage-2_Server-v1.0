@@ -1,7 +1,16 @@
+const ApplicationError = require('./applicationError');
 
-module.exports = (response, error) => {
-    response.status(500).json({
+const errorHandler = (error, request, response, next) => {
+    if (error instanceof ApplicationError) {
+        response.status(error.status).send({ message: error.message });
+        return;
+    }
+    response.status(500).send({
         success: false,
         massage: error.message ? error.massage : error
-    })
-}
+    });
+};
+
+module.exports = {
+    errorHandler
+};

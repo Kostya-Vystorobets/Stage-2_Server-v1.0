@@ -2,6 +2,8 @@
 /.eslintrc.js
 /.env
 /.prettierrc
+/logger
 /REST API.txt
 /REST API.txt
-/_Git repository
+/data
+/combined.log

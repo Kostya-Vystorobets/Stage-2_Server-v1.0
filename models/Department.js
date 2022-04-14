@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const departmentSchema = new Schema({
-    id: {
-        type: String,
-        require: true
-    },
     name: {
         type: String,
         require: true
@@ -15,16 +11,21 @@ const departmentSchema = new Schema({
         require: true
     },
     created_at: {
-        type: String,
-        require: true
+        type: Date,
+        require: true,
+        default: () => Date.now()
     },
     updated_at: {
-        type: String,
-        require: true
+        type: Date,
+        require: true,
+        default: () => Date.now()
     },
     employees: [{
         type: Schema.Types.ObjectId,
+        ref: "employees"
     }]
 })
+
+
 
 module.exports = mongoose.model('departments', departmentSchema)

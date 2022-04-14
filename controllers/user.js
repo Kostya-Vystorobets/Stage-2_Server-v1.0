@@ -1,20 +1,27 @@
-const service = require('../services/user')
-
+const service = require('../services/user');
+const validation = require('../validations/user')
 
 const login = async (request, response, next) => {
     try {
-        const user = await service.login({ email: request.body.email })
-        return response.send(user)
+        const token = await service.login(request);
+        return response.send(token);
     } catch (error) {
-        next(error)
+        next(error);
     }
 };
 
-const logout = (request, response) => {
-
+const create = async (request, response, next) => {
+    try {
+        await validation.validUserCreate(request.body);
+        const employee = await service.create(request.params.departmentId, request.body);
+        return response.send(employee);
+    } catch (error) {
+        next(error);
+    }
 };
+
 
 module.exports = {
     login,
-    logout
-}
+    create
+};
