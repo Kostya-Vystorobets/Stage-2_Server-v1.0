@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const ApplicationError = require('./errors/applicationError');
 const { verifyAuth } = require('./middleware/verifyAuth');
 const { errorHandlerMiddleware } = require('./middleware/errorHandlerMiddleware');
-const { initDatabase } = require('./database/initDatabase')
+const { initDatabase } = require('./database/initDatabase');
 const version = 'v1';
 
 initDatabase();

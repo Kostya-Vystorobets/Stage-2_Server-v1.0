@@ -4,8 +4,8 @@ const ApplicationError = require('../errors/applicationError');
 const validDepartmentCreate = async (data) => {
     try {
         const schema = Joi.object({
-            name: Joi.string().alphanum().min(5).max(30).required(),
-            description: Joi.string().min(5).max(100).required(),
+            name: Joi.string().required(),
+            description: Joi.string().required(),
         });
         await schema.validateAsync(data);
     } catch (error) {
@@ -17,7 +17,7 @@ const validDepartmentCreate = async (data) => {
 const validDepartmentUpdete = async (data) => {
     try {
         const schema = Joi.object({
-            description: Joi.string().min(5).max(100),
+            description: Joi.string(),
         });
         await schema.validateAsync(data);
     } catch (error) {

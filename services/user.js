@@ -9,7 +9,7 @@ const login = async (request) => {
     if (user) {
         const validPassword = await bcrypt.compare(request.body.password, user.password)
         if (validPassword) {
-            logger.info("User is logged in")
+            logger.info("User is logged in.")
             const token = jwt.sign({
                 username: user.usernameі,
                 userId: user._id
@@ -26,17 +26,29 @@ const login = async (request) => {
 };
 
 const create = async (user) => {
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds)
-    const hashPassword = await bcrypt.hash(user.password, salt)
-    const newUser = new User({
-        username: user.username,
-        password: hashPassword,
-    })
-    return newUser.save()
+    const сheckUserName = await User.findOne({ userName: user.userName });
+    if (!сheckUserName) {
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds)
+        const hashPassword = await bcrypt.hash(user.password, salt)
+        const newUser = new User({
+            userName: user.userName,
+            password: hashPassword,
+        })
+        return newUser.save()
+    } else {
+        throw new ApplicationError('The User with this User Name already exists.', 404)
+    }
 };
+
+const logout = async (request) => {
+
+};
+
+
 
 module.exports = {
     login,
-    create
+    create,
+    logout
 };

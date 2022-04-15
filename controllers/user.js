@@ -20,6 +20,15 @@ const create = async (request, response, next) => {
     }
 };
 
+const logout = async (request, response, next) => {
+    try {
+        const token = await service.logout(request);
+        return response.send(token);
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 module.exports = {
     login,
