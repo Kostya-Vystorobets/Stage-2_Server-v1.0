@@ -3,7 +3,7 @@ const validation = require('../validations/department')
 
 const getAll = async (request, response, next) => {
     try {
-        const departments = await service.getAll(request.body)
+        const departments = await service.getAll(request)
         return response.send(departments);
     } catch (error) {
         next(error)

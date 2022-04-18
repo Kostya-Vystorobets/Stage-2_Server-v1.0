@@ -41,14 +41,7 @@ const create = async (user) => {
     }
 };
 
-const logout = async (request) => {
-
-};
-
-
-
 module.exports = {
     login,
-    create,
-    logout
+    create
 };

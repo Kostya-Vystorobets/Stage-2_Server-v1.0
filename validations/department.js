@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const ApplicationError = require('../errors/applicationError');
+const logger = require('../logger/logger');
 
 const validDepartmentCreate = async (data) => {
     try {

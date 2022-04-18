@@ -10,9 +10,9 @@ async function getKey(byteSize) {
 
 const createDefaultUser = async (next) => {
     try {
-        const username = "Admin";
+        const userName = "Admin";
         const password = await getKey(12);
-        const data = { username: username, password: password.toString("hex") };
+        const data = { userName: userName, password: password.toString("hex") };
         await service.create(data)
         logger.info("Default User was created.")
         return data;

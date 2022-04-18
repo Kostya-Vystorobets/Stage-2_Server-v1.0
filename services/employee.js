@@ -14,13 +14,21 @@ const getById = async (employeeId) => {
 const deleteById = async (departmentId, employeeId) => {
     await validate.validateId(departmentId)
     await validate.validateId(employeeId)
-    const deleteEmployee = await Employee.deleteOne({ employeeId })
+    const department = await Department.findById(departmentId);
+    if (!department) {
+        throw new ApplicationError('The department with this ID was not found', 404)
+    }
+    const employee = await Employee.findById(employeeId);
+    if (!employee) {
+        throw new ApplicationError('The Employee with this ID was not found', 404)
+    } else {
+        await employee.remove();
+    }
     await Department.findOneAndUpdate(
         { _id: departmentId },
         { $pull: { employees: employeeId } },
         { new: true, useFindAndModify: false }
     )
-    return deleteEmployee
 }
 
 const create = async (departmentId, employee) => {
@@ -61,9 +69,6 @@ const updeteById = async (employeeId, employee) => {
             firstName: employee.firstName,
             lastName: employee.lastName,
             updated_at: Date.now()
-        },
-        {
-            new: true
         })
 }
 
