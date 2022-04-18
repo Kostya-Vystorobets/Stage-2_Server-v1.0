@@ -5,10 +5,10 @@ const logger = require('../logger/logger');
 const validEmployeeCreate = async (data) => {
     try {
         const schema = Joi.object({
-            userName: Joi.string().alphanum().min(5).max(30).required(),
-            email: Joi.string().min(5).max(30).required().email(),
-            firstName: Joi.string().min(2).max(30).required(),
-            lastName: Joi.string().min(2).max(30).required()
+            userName: Joi.string().required(),
+            email: Joi.string().required().email(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required()
         });
         await schema.validateAsync(data);
     } catch (error) {
@@ -21,9 +21,9 @@ const validEmployeeCreate = async (data) => {
 const validEmployeeUpdete = async (data) => {
     try {
         const schema = Joi.object({
-            email: Joi.string().min(5).max(30).email(),
-            firstName: Joi.string().min(2).max(30),
-            lastName: Joi.string().min(2).max(30)
+            email: Joi.string().email(),
+            firstName: Joi.string(),
+            lastName: Joi.string()
         });
         await schema.validateAsync(data);
     } catch (error) {

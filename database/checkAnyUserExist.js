@@ -5,9 +5,9 @@ const checkAnyUserExist = async (next) => {
     try {
         const userCount = await User.find().count();
         if (userCount === 0) {
-            const result = await createDefaultUser();
-            console.log(`username: ${result.username}`)
-            console.log(`password: ${result.password}`)
+            const user = await createDefaultUser();
+            console.log(`userName: ${user.userName}`)
+            console.log(`password: ${user.password}`)
         }
     } catch (error) {
         next(error)

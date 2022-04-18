@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "server": "nodemon index.js", 
+    "server": "nodemon index.js",
     "lint": "eslint . --fix"
   },
   "keywords": [
@@ -23,10 +23,12 @@
     "express": "^4.17.2",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "jwt-redis": "^6.0.0",
     "mongo-seeding": "^3.7.1",
     "mongodb": "^4.3.1",
     "mongoose": "^6.1.10",
     "morgan": "^1.10.0",
+    "redis": "^4.0.6",
     "winston": "^3.6.0"
   },
   "devDependencies": {

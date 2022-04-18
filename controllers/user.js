@@ -13,13 +13,12 @@ const login = async (request, response, next) => {
 const create = async (request, response, next) => {
     try {
         await validation.validUserCreate(request.body);
-        const employee = await service.create(request.params.departmentId, request.body);
-        return response.send(employee);
+        const user = await service.create(request.body);
+        return response.send(user);
     } catch (error) {
         next(error);
     }
 };
-
 
 module.exports = {
     login,
