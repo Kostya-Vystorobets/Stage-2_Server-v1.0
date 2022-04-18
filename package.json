@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "fullstack app Stage 2",
   "main": "index.js",
+  "engines": {
+    "node": "16.13.2",
+    "npm": "8.1.2"
+  },
+
   "scripts": {
     "start": "node index",
     "server": "nodemon index.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
   },
   "keywords": [
     "node",
