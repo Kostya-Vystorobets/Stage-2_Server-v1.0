@@ -3,39 +3,24 @@ const validate = require('../validations/generalValidation');
 const ApplicationError = require('../errors/applicationError');
 
 const getAll = async (request) => {
-    let departments = [];
-    const name = request.query.name
+    const count = await Department.count();
+    const name = request.query.name;
+    const offset = request.query.offset || 0;
+    const limit = request.query.limit || count;
     if (name) {
-        departments = await Department.find({ name: name }).select('-employees');
-        if (!departments) {
+        const department = await Department.find({ name: name }).select('-employees');
+        if (!department[0]) {
             throw new ApplicationError(`Department with the name ${name} not found.`, 404)
         }
+        return { data: department }
     }
     if (!name) {
-        departments = await Department.find().select('-employees').sort('name');
+        const departments = await Department.find().select('-employees').sort('name').skip(offset).limit(limit);
         if (!departments) {
             throw new ApplicationError('There are no existing departments.', 404)
         }
+        return { count: count, data: departments }
     }
-    const page = parseInt(request.query.page) || 1;
-    const limit = parseInt(request.query.limit) || departments.length;
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-    const results = {};
-    if (endIndex < departments.length) {
-        results.next = {
-            page: page + 1,
-            limit: limit
-        };
-    }
-    if (startIndex > 0) {
-        results.previos = {
-            page: page - 1,
-            limit: limit
-        };
-    }
-    results.results = departments.slice(startIndex, endIndex);
-    return results;
 }
 
 const getById = async (departmentId) => {
