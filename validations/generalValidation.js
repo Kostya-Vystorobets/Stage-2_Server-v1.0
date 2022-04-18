@@ -9,4 +9,4 @@ const validateId = (id) => {
     }
 }
 
-module.exports = { validateId }
+module.exports = { validateId };
