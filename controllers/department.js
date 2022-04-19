@@ -3,7 +3,7 @@ const validation = require('../validations/department')
 
 const getAll = async (request, response, next) => {
     try {
-        const departments = await service.getAll(request.body)
+        const departments = await service.getAll(request)
         return response.send(departments);
     } catch (error) {
         next(error)
@@ -19,7 +19,7 @@ const getById = async (request, response, next) => {
 }
 const deleteById = async (request, response, next) => {
     try {
-        const department = service.deleteById({ _id: request.params.id })
+        const department = service.deleteById(request.params.id);
         return response.send(department);
     } catch (error) {
         next(error)

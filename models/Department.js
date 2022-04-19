@@ -22,7 +22,8 @@ const departmentSchema = new Schema({
     },
     employees: [{
         type: Schema.Types.ObjectId,
-        ref: "employees"
+        select: true,
+        ref: 'employees'
     }]
 })
 
