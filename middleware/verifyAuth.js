@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-
-const ApplicationError = require('../errors/applicationError');
+const AppError = require('../errors/applicationError');
 
 const verifyAuth = (request, response, next) => {
     try {
@@ -14,11 +13,11 @@ const verifyAuth = (request, response, next) => {
                 request = decoded;
                 next();
             } else {
-                throw new ApplicationError('Access denied. Token not provided', 401);
+                throw new AppError('Access denied. Token not provided', 401);
             }
         }
     } catch (error) {
-        throw new ApplicationError('Invalid token', 401);
+        throw new AppError('Invalid token', 401);
     }
 };
 

@@ -1,7 +1,7 @@
-const ApplicationError = require('./applicationError');
+const AppError = require('./applicationError');
 
 const errorHandler = (error, request, response, next) => {
-    if (error instanceof ApplicationError) {
+    if (error instanceof AppError) {
         response.status(error.status).send({ message: error.message });
         return;
     }

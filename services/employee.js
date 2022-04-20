@@ -1,26 +1,26 @@
 const Employee = require('../models/Employee');
 const Department = require('../models/Department');
-const ApplicationError = require('../errors/applicationError');
-const validate = require('../validations/generalValidation')
+const AppError = require('../errors/applicationError');
+const validate = require('../validations/generalValidation');
 
 const getById = async (employeeId) => {
-    await validate.validateId(employeeId)
-    const employee = await Employee.findById(employeeId)
+    await validate.validateId(employeeId);
+    const employee = await Employee.findById(employeeId);
     if (!employee) {
-        throw new ApplicationError('The employee with this ID was not found', 404)
+        throw new AppError('The employee with this ID was not found', 404);
     }
-    return employee
-}
+    return employee;
+};
 const deleteById = async (departmentId, employeeId) => {
-    await validate.validateId(departmentId)
-    await validate.validateId(employeeId)
+    await validate.validateId(departmentId);
+    await validate.validateId(employeeId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw new ApplicationError('The department with this ID was not found', 404)
+        throw new AppError('The department with this ID was not found', 404);
     }
     const employee = await Employee.findById(employeeId);
     if (!employee) {
-        throw new ApplicationError('The Employee with this ID was not found', 404)
+        throw new AppError('The Employee with this ID was not found', 404);
     } else {
         await employee.remove();
     }
@@ -28,22 +28,24 @@ const deleteById = async (departmentId, employeeId) => {
         { _id: departmentId },
         { $pull: { employees: employeeId } },
         { new: true, useFindAndModify: false }
-    )
-}
+    );
+};
 
 const create = async (departmentId, employee) => {
     await validate.validateId(departmentId);
     const сheckDepartmentById = await Department.findById(departmentId);
     if (!сheckDepartmentById) {
-        throw new ApplicationError('The department with this ID was not found.', 404)
+        throw new AppError('The department with this ID was not found.', 404);
     }
-    const сheckUserName = await Employee.findOne({ userName: employee.userName });
+    const сheckUserName = await Employee.findOne({
+        userName: employee.userName
+    });
     if (сheckUserName) {
-        throw new ApplicationError('The employee with this User Name already exists.', 404)
+        throw new AppError('The employee with this User Name already exists.', 404);
     }
     const сheckEmail = await Employee.findOne({ email: employee.email });
     if (сheckEmail) {
-        throw new ApplicationError('The employee with this Email already exists.', 400)
+        throw new AppError('The employee with this Email already exists.', 404);
     }
     const newEmployee = new Employee({
         userName: employee.userName,
@@ -52,29 +54,27 @@ const create = async (departmentId, employee) => {
         firstName: employee.firstName,
         lastName: employee.lastName
     });
-    const savedEmployee = await newEmployee.save()
+    const savedEmployee = await newEmployee.save();
     await Department.findOneAndUpdate(
         { _id: departmentId },
         { $push: { employees: savedEmployee._id } },
         { new: true, useFindAndModify: false }
-    )
+    );
     return savedEmployee;
-}
+};
 const updeteById = async (employeeId, employee) => {
-    await validate.validateId(employeeId)
-    return Employee.findOneAndUpdate(
-        employeeId,
-        {
-            email: employee.email,
-            firstName: employee.firstName,
-            lastName: employee.lastName,
-            updated_at: Date.now()
-        })
-}
+    await validate.validateId(employeeId);
+    return Employee.findOneAndUpdate(employeeId, {
+        email: employee.email,
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        updated_at: Date.now()
+    });
+};
 
 module.exports = {
     getById,
     deleteById,
     create,
     updeteById
-}
+};

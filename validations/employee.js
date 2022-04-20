@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const ApplicationError = require('../errors/applicationError');
+const AppError = require('../errors/applicationError');
 const logger = require('../logger/logger');
 
 const validEmployeeCreate = async (data) => {
@@ -13,9 +13,8 @@ const validEmployeeCreate = async (data) => {
         await schema.validateAsync(data);
     } catch (error) {
         logger.error(error);
-        throw new ApplicationError(error);
+        throw new AppError(error);
     }
-
 };
 
 const validEmployeeUpdete = async (data) => {
@@ -28,9 +27,8 @@ const validEmployeeUpdete = async (data) => {
         await schema.validateAsync(data);
     } catch (error) {
         logger.error(error);
-        throw new ApplicationError(error);
+        throw new AppError(error);
     }
-
 };
 
 module.exports = { validEmployeeCreate, validEmployeeUpdete };

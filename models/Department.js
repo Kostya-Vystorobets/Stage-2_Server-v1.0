@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const departmentSchema = new Schema({
     name: {
@@ -20,13 +20,13 @@ const departmentSchema = new Schema({
         require: true,
         default: () => Date.now()
     },
-    employees: [{
-        type: Schema.Types.ObjectId,
-        select: true,
-        ref: 'employees'
-    }]
-})
+    employees: [
+        {
+            type: Schema.Types.ObjectId,
+            select: true,
+            ref: 'employees'
+        }
+    ]
+});
 
-
-
-module.exports = mongoose.model('departments', departmentSchema)
+module.exports = mongoose.model('departments', departmentSchema);
