@@ -1,19 +1,17 @@
 const Joi = require('joi');
-const AppError = require('../errors/applicationError');
-const logger = require('../logger/logger');
+const ErrorException = require('../error-handler/error-exception');
 
 const validEmployeeCreate = async (data) => {
     try {
         const schema = Joi.object({
-            userName: Joi.string().required(),
+            userName: Joi.string().min(5).required(),
             email: Joi.string().required().email(),
             firstName: Joi.string().required(),
             lastName: Joi.string().required()
         });
         await schema.validateAsync(data);
     } catch (error) {
-        logger.error(error);
-        throw new AppError(error);
+        throw ErrorException.BadRequest(error.details[0].message);
     }
 };
 
@@ -26,8 +24,7 @@ const validEmployeeUpdete = async (data) => {
         });
         await schema.validateAsync(data);
     } catch (error) {
-        logger.error(error);
-        throw new AppError(error);
+        throw ErrorException.BadRequest(error.details[0].message);
     }
 };
 

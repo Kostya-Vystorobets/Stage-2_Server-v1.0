@@ -1,13 +1,13 @@
 const Employee = require('../models/Employee');
 const Department = require('../models/Department');
-const AppError = require('../errors/applicationError');
+const ErrorException = require('../error-handler/error-exception');
 const validate = require('../validations/generalValidation');
 
 const getById = async (employeeId) => {
     await validate.validateId(employeeId);
     const employee = await Employee.findById(employeeId);
     if (!employee) {
-        throw new AppError('The employee with this ID was not found', 404);
+        throw ErrorException.BadRequest('The employee with this ID was not found');
     }
     return employee;
 };
@@ -16,11 +16,11 @@ const deleteById = async (departmentId, employeeId) => {
     await validate.validateId(employeeId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw new AppError('The department with this ID was not found', 404);
+        throw ErrorException.BadRequest('The department with this ID was not found');
     }
     const employee = await Employee.findById(employeeId);
     if (!employee) {
-        throw new AppError('The Employee with this ID was not found', 404);
+        throw ErrorException.BadRequest('The Employee with this ID was not found');
     } else {
         await employee.remove();
     }
@@ -35,17 +35,17 @@ const create = async (departmentId, employee) => {
     await validate.validateId(departmentId);
     const сheckDepartmentById = await Department.findById(departmentId);
     if (!сheckDepartmentById) {
-        throw new AppError('The department with this ID was not found.', 404);
+        throw ErrorException.BadRequest('The department with this ID was not found.');
     }
     const сheckUserName = await Employee.findOne({
         userName: employee.userName
     });
     if (сheckUserName) {
-        throw new AppError('The employee with this User Name already exists.', 404);
+        throw ErrorException.BadRequest('The employee with this User Name already exists.');
     }
     const сheckEmail = await Employee.findOne({ email: employee.email });
     if (сheckEmail) {
-        throw new AppError('The employee with this Email already exists.', 404);
+        throw ErrorException.BadRequest('The employee with this Email already exists.');
     }
     const newEmployee = new Employee({
         userName: employee.userName,

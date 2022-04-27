@@ -7,3 +7,6 @@
 /REST API.txt
 /data
 /combined.log
+/.dockerignore
+/Dockerfile
+/heroku.yml

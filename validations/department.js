@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const AppError = require('../errors/applicationError');
+const ErrorException = require('../error-handler/error-exception');
 const logger = require('../logger/logger');
 
 const validDepartmentCreate = async (data) => {
@@ -10,8 +10,7 @@ const validDepartmentCreate = async (data) => {
         });
         await schema.validateAsync(data);
     } catch (error) {
-        logger.error(error);
-        throw new AppError('validDepartmentCreate');
+        throw ErrorException.BadRequest(error.details[0].message);
     }
 };
 
@@ -23,7 +22,7 @@ const validDepartmentUpdete = async (data) => {
         await schema.validateAsync(data);
     } catch (error) {
         logger.error(error);
-        throw new AppError('validDepartmentUpdete');
+        throw ErrorException.BadRequest(error.details[0].message);
     }
 };
 
