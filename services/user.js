@@ -1,27 +1,32 @@
-const User = require("../models/User");
+const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const bcrypt = require("bcryptjs/dist/bcrypt");
-const logger = require("../logger/logger");
-const ApplicationError = require('../errors/applicationError');
+const bcrypt = require('bcryptjs/dist/bcrypt');
+const logger = require('../logger/logger');
+const { BadRequest } = require('../error-handler/error-exception');
 
 const login = async (request) => {
-    const user = await User.findOne({ username: request.body.username })
+    const user = await User.findOne({ userName: request.body.userName });
+    console.log(user);
     if (user) {
-        const validPassword = await bcrypt.compare(request.body.password, user.password)
+        const validPassword = await bcrypt.compare(request.body.password, user.password);
         if (validPassword) {
-            logger.info("User is logged in.")
-            const token = jwt.sign({
-                username: user.usernameі,
-                userId: user._id
-            }, process.env.jwt, { expiresIn: '24h' })
-            return { token: token }
+            logger.info('User is logged in.');
+            const token = jwt.sign(
+                {
+                    username: user.username,
+                    userId: user._id
+                },
+                process.env.jwt_key,
+                { expiresIn: '24h' }
+            );
+            return { token: token };
         } else {
-            logger.warn('Password is not correct')
-            throw new ApplicationError('Password is not correct', 401)
+            logger.warn('Password is not correct');
+            throw BadRequest('Password is not correct');
         }
     } else {
-        logger.warn('User not found')
-        throw new ApplicationError('User not found', 404)
+        logger.warn('User not found');
+        throw BadRequest('User not found');
     }
 };
 
@@ -29,15 +34,17 @@ const create = async (user) => {
     const сheckUserName = await User.findOne({ userName: user.userName });
     if (!сheckUserName) {
         const saltRounds = 10;
-        const salt = await bcrypt.genSalt(saltRounds)
-        const hashPassword = await bcrypt.hash(user.password, salt)
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashPassword = await bcrypt.hash(user.password, salt);
         const newUser = new User({
             userName: user.userName,
-            password: hashPassword,
-        })
-        return newUser.save()
+            password: hashPassword
+        });
+        await newUser.save();
+        newUser.password = user.password;
+        return newUser;
     } else {
-        throw new ApplicationError('The User with this User Name already exists.', 404)
+        throw BadRequest('The User with this User Name already exists.');
     }
 };
 

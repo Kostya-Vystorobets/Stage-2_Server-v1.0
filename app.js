@@ -5,9 +5,9 @@ const userRoutes = require('./routes/user');
 const departmentRoutes = require('./routes/department');
 const employeeRoutes = require('./routes/employee');
 const bodyParser = require('body-parser');
-const ApplicationError = require('./errors/applicationError');
+const ErrorException = require('./error-handler/error-exception');
 const { verifyAuth } = require('./middleware/verifyAuth');
-const { errorHandlerMiddleware } = require('./middleware/errorHandlerMiddleware');
+const { errorHandler } = require('./error-handler/errorHandler');
 const { initDatabase } = require('./database/initDatabase');
 const version = 'v1';
 
@@ -28,9 +28,9 @@ app.use(`/api/${version}/department`, departmentRoutes);
 app.use(`/api/${version}/employee`, employeeRoutes);
 
 app.use('*', () => {
-    throw new ApplicationError('Page with this URI was not found', 404);
+    throw ErrorException.NotFound();
 });
 
-app.use(errorHandlerMiddleware);
+app.use(errorHandler);
 
 module.exports = app;

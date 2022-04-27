@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-
-const ApplicationError = require('../errors/applicationError');
+const { Unauthenticated } = require('../error-handler/error-exception');
 
 const verifyAuth = (request, response, next) => {
     try {
@@ -8,17 +7,18 @@ const verifyAuth = (request, response, next) => {
             next();
         } else {
             const bearerToken = request.headers.authorization;
+            console.log(bearerToken);
             const token = bearerToken.slice(7);
             if (token) {
-                const decoded = jwt.verify(token, process.env.jwt);
+                const decoded = jwt.verify(token, process.env.jwt_key);
                 request = decoded;
                 next();
             } else {
-                throw new ApplicationError('Access denied. Token not provided', 401);
+                throw Unauthenticated('Access denied. Token not provided');
             }
         }
     } catch (error) {
-        throw new ApplicationError('Invalid token', 401);
+        throw Unauthenticated('Invalid token');
     }
 };
 

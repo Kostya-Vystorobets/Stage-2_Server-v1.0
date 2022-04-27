@@ -1,5 +1,5 @@
 const service = require('../services/user');
-const validation = require('../validations/user')
+const validation = require('../validations/user');
 
 const login = async (request, response, next) => {
     try {

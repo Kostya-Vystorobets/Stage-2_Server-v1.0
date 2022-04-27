@@ -1,4 +1,4 @@
-const logger = require('./logger/logger')
+const logger = require('./logger/logger');
 const app = require('./app');
 const port = process.env.PORT || 3000;
 

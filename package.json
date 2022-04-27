@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "description": "fullstack app Stage 2",
   "main": "index.js",
+  "engines": {
+    "node": "16.13.2",
+    "npm": "8.1.2"
+  },
   "scripts": {
     "start": "node index",
     "server": "nodemon index.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
   },
   "keywords": [
     "node",
@@ -23,12 +28,10 @@
     "express": "^4.17.2",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
-    "jwt-redis": "^6.0.0",
     "mongo-seeding": "^3.7.1",
     "mongodb": "^4.3.1",
     "mongoose": "^6.1.10",
     "morgan": "^1.10.0",
-    "redis": "^4.0.6",
     "winston": "^3.6.0"
   },
   "devDependencies": {

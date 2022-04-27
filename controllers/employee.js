@@ -1,5 +1,5 @@
 const service = require('../services/employee');
-const validation = require('../validations/employee')
+const validation = require('../validations/employee');
 
 const getById = async (request, response, next) => {
     try {
