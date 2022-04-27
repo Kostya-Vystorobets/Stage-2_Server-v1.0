@@ -1,6 +1,6 @@
 const Department = require('../models/Department');
 const validate = require('../validations/generalValidation');
-const ErrorException = require('../error-handler/error-exception');
+const { BadRequest } = require('../error-handler/error-exception');
 
 const getAll = async (request) => {
     const count = await Department.count();
@@ -10,7 +10,7 @@ const getAll = async (request) => {
     if (name) {
         const department = await Department.find({ name: name }).select('-employees');
         if (!department[0]) {
-            throw ErrorException.BadRequest(`Department with the name ${name} not found.`);
+            throw BadRequest(`Department with the name ${name} not found.`);
         }
         return { data: department };
     }
@@ -21,7 +21,7 @@ const getAll = async (request) => {
             .skip(offset)
             .limit(limit);
         if (!departments) {
-            throw ErrorException.BadRequest('There are no existing departments.');
+            throw BadRequest('There are no existing departments.');
         }
         return { count: count, data: departments };
     }
@@ -31,7 +31,7 @@ const getById = async (departmentId) => {
     await validate.validateId(departmentId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw ErrorException.BadRequest('The department with this ID was not found');
+        throw BadRequest('The department with this ID was not found');
     }
     return department.populate('employees');
 };
@@ -40,7 +40,7 @@ const deleteById = async (departmentId) => {
     await validate.validateId(departmentId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw ErrorException.BadRequest('The department with this ID was not found');
+        throw BadRequest('The department with this ID was not found');
     }
     if (department.employees.length !== 0) {
         throw ErrorException.BadRequest(
@@ -54,7 +54,7 @@ const deleteById = async (departmentId) => {
 const create = async (department) => {
     const сheckName = await Department.findOne({ name: department.name });
     if (сheckName) {
-        throw ErrorException.BadRequest('The department with this Name already exists.');
+        throw BadRequest('The department with this Name already exists.');
     }
     const newDepartment = new Department({
         name: department.name,

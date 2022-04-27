@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const ErrorException = require('../error-handler/error-exception');
+const { BadRequest } = require('../error-handler/error-exception');
 
 const validEmployeeCreate = async (data) => {
     try {
@@ -11,7 +11,7 @@ const validEmployeeCreate = async (data) => {
         });
         await schema.validateAsync(data);
     } catch (error) {
-        throw ErrorException.BadRequest(error.details[0].message);
+        throw BadRequest(error.details.shift().message);
     }
 };
 
@@ -24,7 +24,7 @@ const validEmployeeUpdete = async (data) => {
         });
         await schema.validateAsync(data);
     } catch (error) {
-        throw ErrorException.BadRequest(error.details[0].message);
+        throw BadRequest(error.details.shift().message);
     }
 };
 
