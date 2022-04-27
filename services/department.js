@@ -1,6 +1,6 @@
 const Department = require('../models/Department');
 const validate = require('../validations/generalValidation');
-const AppError = require('../errors/applicationError');
+const ErrorException = require('../error-handler/error-exception');
 
 const getAll = async (request) => {
     const count = await Department.count();
@@ -10,7 +10,7 @@ const getAll = async (request) => {
     if (name) {
         const department = await Department.find({ name: name }).select('-employees');
         if (!department[0]) {
-            throw new AppError(`Department with the name ${name} not found.`, 404);
+            throw ErrorException.BadRequest(`Department with the name ${name} not found.`);
         }
         return { data: department };
     }
@@ -21,7 +21,7 @@ const getAll = async (request) => {
             .skip(offset)
             .limit(limit);
         if (!departments) {
-            throw new AppError('There are no existing departments.', 404);
+            throw ErrorException.BadRequest('There are no existing departments.');
         }
         return { count: count, data: departments };
     }
@@ -31,7 +31,7 @@ const getById = async (departmentId) => {
     await validate.validateId(departmentId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw new AppError('The department with this ID was not found', 404);
+        throw ErrorException.BadRequest('The department with this ID was not found');
     }
     return department.populate('employees');
 };
@@ -40,12 +40,11 @@ const deleteById = async (departmentId) => {
     await validate.validateId(departmentId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw new AppError('The department with this ID was not found', 404);
+        throw ErrorException.BadRequest('The department with this ID was not found');
     }
     if (department.employees.length !== 0) {
-        throw new AppError(
-            'Unable to delete a department. The department contains employees.',
-            404
+        throw ErrorException.BadRequest(
+            'Unable to delete a department. The department contains employees.'
         );
     } else {
         await department.remove();
@@ -55,7 +54,7 @@ const deleteById = async (departmentId) => {
 const create = async (department) => {
     const сheckName = await Department.findOne({ name: department.name });
     if (сheckName) {
-        throw new AppError('The department with this Name already exists.', 404);
+        throw ErrorException.BadRequest('The department with this Name already exists.');
     }
     const newDepartment = new Department({
         name: department.name,

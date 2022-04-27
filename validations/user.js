@@ -1,6 +1,5 @@
 const Joi = require('joi');
-const AppError = require('../errors/applicationError');
-const logger = require('../logger/logger');
+const ErrorException = require('../error-handler/error-exception');
 
 const validUserCreate = async (data) => {
     try {
@@ -10,8 +9,7 @@ const validUserCreate = async (data) => {
         });
         await schema.validateAsync(data);
     } catch (error) {
-        logger.error(error);
-        throw new AppError(error);
+        throw ErrorException.BadRequest(error.details[0].message);
     }
 };
 

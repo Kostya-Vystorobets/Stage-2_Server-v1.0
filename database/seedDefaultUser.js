@@ -8,17 +8,13 @@ async function getKey(byteSize) {
     return key;
 }
 
-const createDefaultUser = async (next) => {
-    try {
-        const userName = 'Admin';
-        const password = await getKey(12);
-        const data = { userName: userName, password: password.toString('hex') };
-        await service.create(data);
-        logger.info('Default User was created.');
-        return data;
-    } catch (error) {
-        next(error);
-    }
+const createDefaultUser = async () => {
+    const userName = 'Admin';
+    const password = await getKey(12);
+    const data = { userName: userName, password: password.toString('hex') };
+    await service.create(data);
+    logger.info('Default User was created.');
+    return data;
 };
 
 const checkUserExist = async (next) => {
