@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const ErrorException = require('../error-handler/error-exception');
+const { Unauthenticated } = require('../error-handler/error-exception');
 
 const verifyAuth = (request, response, next) => {
     try {
@@ -14,11 +14,11 @@ const verifyAuth = (request, response, next) => {
                 request = decoded;
                 next();
             } else {
-                throw ErrorException.Unauthenticated('Access denied. Token not provided');
+                throw Unauthenticated('Access denied. Token not provided');
             }
         }
     } catch (error) {
-        throw ErrorException.Unauthenticated('Invalid token');
+        throw Unauthenticated('Invalid token');
     }
 };
 

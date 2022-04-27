@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const ErrorException = require('../error-handler/error-exception');
+const { BadRequest } = require('../error-handler/error-exception');
 
 const validateId = (id) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        throw ErrorException.AsyncError(`ID: ${id} Invalid.`);
+        throw BadRequest(`ID: ${id} Invalid.`);
     }
 };
 

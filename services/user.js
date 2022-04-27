@@ -2,7 +2,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs/dist/bcrypt');
 const logger = require('../logger/logger');
-const ErrorException = require('../error-handler/error-exception');
+const { BadRequest } = require('../error-handler/error-exception');
 
 const login = async (request) => {
     const user = await User.findOne({ userName: request.body.userName });
@@ -22,11 +22,11 @@ const login = async (request) => {
             return { token: token };
         } else {
             logger.warn('Password is not correct');
-            throw ErrorException.BadRequest('Password is not correct');
+            throw BadRequest('Password is not correct');
         }
     } else {
         logger.warn('User not found');
-        throw ErrorException.BadRequest('User not found');
+        throw BadRequest('User not found');
     }
 };
 
@@ -44,7 +44,7 @@ const create = async (user) => {
         newUser.password = user.password;
         return newUser;
     } else {
-        throw ErrorException.BadRequest('The User with this User Name already exists.');
+        throw BadRequest('The User with this User Name already exists.');
     }
 };
 

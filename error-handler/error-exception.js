@@ -8,9 +8,6 @@ module.exports = class ErrorException extends Error {
     static BadRequest(message) {
         return new ErrorException(400, message);
     }
-    static AsyncError(message) {
-        return new ErrorException(400, message);
-    }
     static Unauthenticated() {
         return new ErrorException(401, 'User not authorized.');
     }
