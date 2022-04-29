@@ -7,7 +7,6 @@ const verifyAuth = (request, response, next) => {
             next();
         } else {
             const bearerToken = request.headers.authorization;
-            console.log(bearerToken);
             const token = bearerToken.slice(7);
             if (token) {
                 const decoded = jwt.verify(token, process.env.jwt_key);

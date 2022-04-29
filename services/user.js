@@ -6,7 +6,6 @@ const { BadRequest } = require('../error-handler/error-exception');
 
 const login = async (request) => {
     const user = await User.findOne({ userName: request.body.userName });
-    console.log(user);
     if (user) {
         const validPassword = await bcrypt.compare(request.body.password, user.password);
         if (validPassword) {
