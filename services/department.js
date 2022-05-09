@@ -31,7 +31,7 @@ const getById = async (departmentId) => {
     await validate.validateId(departmentId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw BadRequest('The department with this ID was not found');
+        throw BadRequest('The department with this ID was not found.');
     }
     return department.populate('employees');
 };
@@ -40,14 +40,13 @@ const deleteById = async (departmentId) => {
     await validate.validateId(departmentId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw BadRequest('The department with this ID was not found');
+        throw BadRequest('The department with this ID was not found.');
     }
     if (department.employees.length !== 0) {
-        throw ErrorException.BadRequest(
-            'Unable to delete a department. The department contains employees.'
-        );
+        throw BadRequest('Unable to delete a department. The department contains employees.');
     } else {
         await department.remove();
+        return { message: 'Department with this ID has been deleted.' };
     }
 };
 
@@ -58,7 +57,7 @@ const create = async (department) => {
     }
     const newDepartment = new Department({
         name: department.name,
-        description: department.description
+        description: department.description,
     });
     return newDepartment.save();
 };
@@ -69,12 +68,12 @@ const updeteById = async (departmentId, department) => {
         departmentId,
         {
             description: department.description,
-            updated_at: Date.now()
+            updated_at: Date.now(),
         },
         {
-            new: true
+            new: true,
         }
-    );
+    ).populate('employees');
 };
 
 module.exports = {
@@ -82,5 +81,5 @@ module.exports = {
     getById,
     deleteById,
     create,
-    updeteById
+    updeteById,
 };

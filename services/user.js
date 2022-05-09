@@ -13,7 +13,7 @@ const login = async (request) => {
             const token = jwt.sign(
                 {
                     username: user.username,
-                    userId: user._id
+                    userId: user._id,
                 },
                 process.env.jwt_key,
                 { expiresIn: '24h' }
@@ -37,7 +37,7 @@ const create = async (user) => {
         const hashPassword = await bcrypt.hash(user.password, salt);
         const newUser = new User({
             userName: user.userName,
-            password: hashPassword
+            password: hashPassword,
         });
         await newUser.save();
         newUser.password = user.password;
@@ -49,5 +49,5 @@ const create = async (user) => {
 
 module.exports = {
     login,
-    create
+    create,
 };

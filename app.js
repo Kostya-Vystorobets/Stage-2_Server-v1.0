@@ -11,9 +11,9 @@ const { errorHandler } = require('./error-handler/errorHandler');
 const { initDatabase } = require('./database/initDatabase');
 const version = 'v1';
 
-initDatabase();
-
 const app = express();
+
+initDatabase();
 
 app.use(morgan('dev'));
 app.use(cors());
