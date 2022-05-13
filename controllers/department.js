@@ -19,7 +19,7 @@ const getById = async (request, response, next) => {
 };
 const deleteById = async (request, response, next) => {
     try {
-        const department = service.deleteById(request.params.id);
+        const department = await service.deleteById(request.params.id);
         return response.send(department);
     } catch (error) {
         next(error);
@@ -37,10 +37,7 @@ const create = async (request, response, next) => {
 const updeteById = async (request, response, next) => {
     try {
         await validation.validDepartmentUpdete(request.body);
-        const department = await service.updeteById(
-            request.params.id,
-            request.body
-        );
+        const department = await service.updeteById(request.params.id, request.body);
         return response.send(department);
     } catch (error) {
         next(error);
@@ -52,5 +49,5 @@ module.exports = {
     getById,
     deleteById,
     create,
-    updeteById
+    updeteById,
 };

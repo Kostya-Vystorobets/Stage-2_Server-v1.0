@@ -7,7 +7,7 @@ const getById = async (employeeId) => {
     await validate.validateId(employeeId);
     const employee = await Employee.findById(employeeId);
     if (!employee) {
-        throw BadRequest('The employee with this ID was not found');
+        throw BadRequest('The employee with this ID was not found.');
     }
     return employee;
 };
@@ -16,19 +16,19 @@ const deleteById = async (departmentId, employeeId) => {
     await validate.validateId(employeeId);
     const department = await Department.findById(departmentId);
     if (!department) {
-        throw BadRequest('The department with this ID was not found');
+        throw BadRequest('The department with this ID was not found.');
     }
     const employee = await Employee.findById(employeeId);
     if (!employee) {
-        throw BadRequest('The Employee with this ID was not found');
-    } else {
-        await employee.remove();
+        throw BadRequest('The Employee with this ID was not found.');
     }
+    await employee.remove();
     await Department.findOneAndUpdate(
         { _id: departmentId },
         { $pull: { employees: employeeId } },
         { new: true, useFindAndModify: false }
     );
+    return { message: 'Employee with this ID has been deleted.' };
 };
 
 const create = async (departmentId, employee) => {
@@ -38,7 +38,7 @@ const create = async (departmentId, employee) => {
         throw BadRequest('The department with this ID was not found.');
     }
     const сheckUserName = await Employee.findOne({
-        userName: employee.userName
+        userName: employee.userName,
     });
     if (сheckUserName) {
         throw BadRequest('The employee with this User Name already exists.');
@@ -52,7 +52,7 @@ const create = async (departmentId, employee) => {
         description: employee.description,
         email: employee.email,
         firstName: employee.firstName,
-        lastName: employee.lastName
+        lastName: employee.lastName,
     });
     const savedEmployee = await newEmployee.save();
     await Department.findOneAndUpdate(
@@ -68,7 +68,7 @@ const updeteById = async (employeeId, employee) => {
         email: employee.email,
         firstName: employee.firstName,
         lastName: employee.lastName,
-        updated_at: Date.now()
+        updated_at: Date.now(),
     });
 };
 
@@ -76,5 +76,5 @@ module.exports = {
     getById,
     deleteById,
     create,
-    updeteById
+    updeteById,
 };

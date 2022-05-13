@@ -4,6 +4,7 @@ const { Unauthenticated } = require('../error-handler/error-exception');
 const verifyAuth = (request, response, next) => {
     try {
         if (request.path === '/api/v1/user/login') {
+            console.log(request.body);
             next();
         } else {
             const bearerToken = request.headers.authorization;
@@ -22,5 +23,5 @@ const verifyAuth = (request, response, next) => {
 };
 
 module.exports = {
-    verifyAuth
+    verifyAuth,
 };
