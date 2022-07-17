@@ -1,0 +1,13 @@
+/node_modules
+/.vscode
+/.eslintrc.js
+/.env
+/.prettierrc
+/logger
+/REST API.txt
+/REST API.txt
+/data
+/combined.log
+/.dockerignore
+/Dockerfile
+/heroku.yml
